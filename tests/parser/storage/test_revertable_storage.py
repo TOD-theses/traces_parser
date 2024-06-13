@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 from tests.test_utils.test_utils import (
     _test_call_context,
 )
-from traces_analyzer.parser.storage.storage import RevertableStorage
+from traces_parser.parser.storage.storage import RevertableStorage
 
 
 def test_revertable_storage_returns_current():

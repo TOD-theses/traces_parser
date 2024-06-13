@@ -3,19 +3,19 @@ from tests.test_utils.test_utils import (
     _test_oracle,
     mock_env,
 )
-from traces_analyzer.parser.events_parser import TraceEvent
-from traces_analyzer.parser.instructions.instructions import (
+from traces_parser.parser.events_parser import TraceEvent
+from traces_parser.parser.instructions.instructions import (
     CALL,
     JUMPDEST,
     PUSH32,
 )
-from traces_analyzer.parser.instructions_parser import (
+from traces_parser.parser.instructions_parser import (
     InstructionMetadata,
     TransactionParsingInfo,
-    parse_instructions,
+    parse_transaction,
 )
-from traces_analyzer.parser.trace_evm.trace_evm import parse_instruction
-from traces_analyzer.utils.hexstring import HexString
+from traces_parser.parser.trace_evm.trace_evm import parse_instruction
+from traces_parser.utils.hexstring import HexString
 
 
 def get_parsing_info(verify_storages=True) -> TransactionParsingInfo:
@@ -33,7 +33,7 @@ def get_dummy_event():
 
 
 def test_parser_empty_events() -> None:
-    assert parse_instructions(get_parsing_info(), []).instructions == []
+    assert parse_transaction(get_parsing_info(), []).instructions == []
 
 
 def test_call_inputs_memory_parsing():
@@ -101,7 +101,7 @@ def test_parser_builds_call_tree() -> None:
         verify_storages=False,
     )
 
-    result = parse_instructions(parsing_info, events)
+    result = parse_transaction(parsing_info, events)
 
     assert result.call_tree.call_context.code_address == _test_hash_addr("0xto")
     assert len(result.call_tree.children) == 1
@@ -115,7 +115,7 @@ def test_parser_sets_step_indexes():
         TraceEvent(pc=3, op=JUMPDEST.opcode, stack=[], memory=None, depth=1),
     ]
 
-    jumpdest, pop_1, pop_2 = parse_instructions(
+    jumpdest, pop_1, pop_2 = parse_transaction(
         get_parsing_info(verify_storages=False), events
     ).instructions
 

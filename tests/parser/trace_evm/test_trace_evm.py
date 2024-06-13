@@ -5,16 +5,16 @@ from tests.test_utils.test_utils import (
     _test_root,
     mock_env,
 )
-from traces_analyzer.parser.environment.parsing_environment import (
+from traces_parser.parser.environment.parsing_environment import (
     InstructionOutputOracle,
     ParsingEnvironment,
 )
-from traces_analyzer.parser.instructions.instructions import (
+from traces_parser.parser.instructions.instructions import (
     MLOAD,
     MSTORE,
     STATICCALL,
 )
-from traces_analyzer.parser.trace_evm.trace_evm import InstructionMetadata, TraceEVM
+from traces_parser.parser.trace_evm.trace_evm import InstructionMetadata, TraceEVM
 
 
 def test_trace_evm_mload():

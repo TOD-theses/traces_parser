@@ -8,14 +8,14 @@ from tests.test_utils.test_utils import (
     _test_root,
     mock_env,
 )
-from traces_analyzer.parser.environment.parsing_environment import (
+from traces_parser.parser.environment.parsing_environment import (
     InstructionOutputOracle,
     ParsingEnvironment,
 )
-from traces_analyzer.parser.information_flow.constant_step_indexes import (
+from traces_parser.parser.information_flow.constant_step_indexes import (
     SPECIAL_STEP_INDEXES,
 )
-from traces_analyzer.parser.information_flow.information_flow_dsl import (
+from traces_parser.parser.information_flow.information_flow_dsl import (
     balance_of,
     balance_transfer,
     calldata_size,
@@ -43,17 +43,17 @@ from traces_analyzer.parser.information_flow.information_flow_dsl import (
     transient_storage_get,
     transient_storage_set,
 )
-from traces_analyzer.parser.information_flow.information_flow_dsl_implementation import (
+from traces_parser.parser.information_flow.information_flow_dsl_implementation import (
     FlowNodeWithResult,
     FlowWithResult,
 )
-from traces_analyzer.parser.storage.storage_value import StorageByteGroup
-from traces_analyzer.parser.storage.storage_writes import (
+from traces_parser.parser.storage.storage_value import StorageByteGroup
+from traces_parser.parser.storage.storage_writes import (
     ReturnDataAccess,
     StorageAccesses,
     StorageWrites,
 )
-from traces_analyzer.utils.hexstring import HexString
+from traces_parser.utils.hexstring import HexString
 
 
 class _TestFlowNode(FlowNodeWithResult):

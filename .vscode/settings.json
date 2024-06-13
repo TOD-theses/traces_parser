@@ -5,5 +5,5 @@
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "python.analysis.include": ["tests", "traces_analyzer"]
+    "python.analysis.include": ["tests", "traces_parser"]
 }

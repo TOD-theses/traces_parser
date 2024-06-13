@@ -45,7 +45,7 @@ snapshots:
 
 .PHONY: test
 test: lint        ## Run tests and generate coverage report.
-	$(ENV_PREFIX)pytest -m 'not slow' -v --cov-config .coveragerc --cov=traces_analyzer -l --tb=short --maxfail=1 tests/
+	$(ENV_PREFIX)pytest -m 'not slow' -v --cov-config .coveragerc --cov=traces_parser -l --tb=short --maxfail=1 tests/
 	$(ENV_PREFIX)coverage xml
 	$(ENV_PREFIX)coverage html
 	$(ENV_PREFIX)pytest -m 'slow' -v -l --tb=short --maxfail=1 tests/
@@ -84,9 +84,9 @@ virtualenv:       ## Create a virtual environment.
 release:          ## Create a new tag for release.
 	@echo "WARNING: This operation will create s version tag and push to github"
 	@read -p "Version? (provide the next x.y.z semver) : " TAG
-	@echo "$${TAG}" > traces_analyzer/VERSION
+	@echo "$${TAG}" > traces_parser/VERSION
 	@$(ENV_PREFIX)gitchangelog > HISTORY.md
-	@git add traces_analyzer/VERSION HISTORY.md
+	@git add traces_parser/VERSION HISTORY.md
 	@git commit -m "release: version $${TAG} 🚀"
 	@echo "creating git tag : $${TAG}"
 	@git tag $${TAG}

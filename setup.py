@@ -1,4 +1,4 @@
-"""Python setup.py for traces_analyzer package"""
+"""Python setup.py for traces_parser package"""
 
 import io
 import os
@@ -7,7 +7,7 @@ from setuptools import find_packages, setup  # type: ignore
 
 def read(*paths, **kwargs):
     """Read the contents of a text file safely.
-    >>> read("traces_analyzer", "VERSION")
+    >>> read("traces_parser", "VERSION")
     '0.1.0'
     >>> read("README.md")
     ...
@@ -31,17 +31,15 @@ def read_requirements(path):
 
 
 setup(
-    name="traces_analyzer",
-    version=read("traces_analyzer", "VERSION"),
+    name="traces_parser",
+    version=read("traces_parser", "VERSION"),
     description="Analyze ethereum traces",
-    url="https://github.com/TOD-theses/traces_analyzer/",
+    url="https://github.com/TOD-theses/traces_parser/",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     author="TOD-theses",
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements("requirements.txt"),
-    entry_points={
-        "console_scripts": ["traces_analyzer = traces_analyzer.__main__:main"]
-    },
+    entry_points={"console_scripts": ["traces_parser = traces_parser.__main__:main"]},
     extras_require={"test": read_requirements("requirements-test.txt")},
 )

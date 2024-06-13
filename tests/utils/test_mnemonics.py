@@ -1,4 +1,4 @@
-from traces_analyzer.utils.mnemonics import (
+from traces_parser.utils.mnemonics import (
     _OPCODE_TO_NAME,
     _NAME_TO_OPCODE,
     name_to_opcode,

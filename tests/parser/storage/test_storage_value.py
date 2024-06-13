@@ -1,5 +1,5 @@
-from traces_analyzer.parser.storage.storage_value import StorageByteGroup
-from traces_analyzer.utils.hexstring import HexString
+from traces_parser.parser.storage.storage_value import StorageByteGroup
+from traces_parser.utils.hexstring import HexString
 
 
 def test_storage_byte_group_empty():

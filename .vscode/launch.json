@@ -8,7 +8,7 @@
             "name": "Debug Benchmark Attack",
             "type": "debugpy",
             "request": "launch",
-            "module": "traces_analyzer",
+            "module": "traces_parser",
             "args": ["--bundles", "traces/benchmark_traces/${input:pickAttack}"],
         }
     ],

@@ -10,15 +10,15 @@ from tests.test_utils.test_utils import (
     _test_root,
     mock_env,
 )
-from traces_analyzer.parser.environment.parsing_environment import (
+from traces_parser.parser.environment.parsing_environment import (
     InstructionOutputOracle,
     ParsingEnvironment,
 )
-from traces_analyzer.parser.information_flow.constant_step_indexes import (
+from traces_parser.parser.information_flow.constant_step_indexes import (
     SPECIAL_STEP_INDEXES,
 )
-from traces_analyzer.parser.instructions.instruction import Instruction
-from traces_analyzer.parser.instructions.instructions import (
+from traces_parser.parser.instructions.instruction import Instruction
+from traces_parser.parser.instructions.instructions import (
     ADD,
     ADDMOD,
     ADDRESS,
@@ -170,9 +170,9 @@ from traces_analyzer.parser.instructions.instructions import (
     XOR,
     get_instruction_class,
 )
-from traces_analyzer.parser.instructions_parser import InstructionMetadata
-from traces_analyzer.parser.trace_evm.trace_evm import parse_instruction
-from traces_analyzer.utils.hexstring import HexString
+from traces_parser.parser.instructions_parser import InstructionMetadata
+from traces_parser.parser.trace_evm.trace_evm import parse_instruction
+from traces_parser.utils.hexstring import HexString
 
 
 _opcodes_to_instruction = [

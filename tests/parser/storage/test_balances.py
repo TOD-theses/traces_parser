@@ -1,10 +1,10 @@
 import pytest
 from tests.test_utils.test_utils import _test_addr, _test_balances
-from traces_analyzer.parser.information_flow.constant_step_indexes import (
+from traces_parser.parser.information_flow.constant_step_indexes import (
     SPECIAL_STEP_INDEXES,
 )
-from traces_analyzer.parser.storage.balances import InvalidAddressException
-from traces_analyzer.utils.hexstring import HexString
+from traces_parser.parser.storage.balances import InvalidAddressException
+from traces_parser.utils.hexstring import HexString
 
 
 def test_balances_last_modified_at_step_index():

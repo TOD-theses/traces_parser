@@ -12,15 +12,15 @@ from tests.test_utils.test_utils import (
     _test_stack_accesses,
     _test_stack_pushes,
 )
-from traces_analyzer.parser.environment.call_context import CallContext, HaltType
-from traces_analyzer.parser.environment.call_context_manager import (
+from traces_parser.parser.environment.call_context import CallContext, HaltType
+from traces_parser.parser.environment.call_context_manager import (
     ExpectedDepthChange,
     UnexpectedDepthChange,
     build_call_tree,
     update_call_context,
 )
-from traces_analyzer.parser.instructions.instruction import Instruction
-from traces_analyzer.parser.instructions.instructions import (
+from traces_parser.parser.instructions.instruction import Instruction
+from traces_parser.parser.instructions.instructions import (
     ADD,
     CALL,
     CALLCODE,
@@ -32,13 +32,13 @@ from traces_analyzer.parser.instructions.instructions import (
     STATICCALL,
     STOP,
 )
-from traces_analyzer.parser.storage.storage_writes import (
+from traces_parser.parser.storage.storage_writes import (
     CalldataWrite,
     CallvalueAccess,
     StorageAccesses,
     StorageWrites,
 )
-from traces_analyzer.utils.hexstring import HexString
+from traces_parser.utils.hexstring import HexString
 
 
 def get_add(call_context: CallContext) -> Instruction:

@@ -1,5 +1,5 @@
 from tests.test_utils.test_utils import _test_group32, _test_mem
-from traces_analyzer.parser.storage.memory import Memory
+from traces_parser.parser.storage.memory import Memory
 
 
 def test_memory_empty():
