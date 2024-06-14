@@ -172,7 +172,7 @@ from traces_parser.parser.instructions.instructions import (
 )
 from traces_parser.parser.instructions_parser import InstructionMetadata
 from traces_parser.parser.trace_evm.trace_evm import parse_instruction
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 
 _opcodes_to_instruction = [

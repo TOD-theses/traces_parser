@@ -47,13 +47,13 @@ from traces_parser.parser.information_flow.information_flow_dsl_implementation i
     FlowNodeWithResult,
     FlowWithResult,
 )
-from traces_parser.parser.storage.storage_value import StorageByteGroup
+from traces_parser.datatypes.storage_byte_group import StorageByteGroup
 from traces_parser.parser.storage.storage_writes import (
     ReturnDataAccess,
     StorageAccesses,
     StorageWrites,
 )
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 
 class _TestFlowNode(FlowNodeWithResult):

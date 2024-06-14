@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING
 
 from typing_extensions import Self
 
-from traces_parser.parser.storage.storage_value import StorageByteGroup
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.storage_byte_group import StorageByteGroup
+from traces_parser.datatypes.hexstring import HexString
 
 if TYPE_CHECKING:
     from traces_parser.parser.instructions.instructions import (

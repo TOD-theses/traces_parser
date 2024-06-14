@@ -1,5 +1,5 @@
 from traces_parser.parser.events_parser import parse_events
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 
 def test_events_parser():

@@ -15,9 +15,9 @@ from traces_parser.parser.instructions.instructions import (
     CallInstruction,
     get_instruction_class,
 )
-from traces_parser.parser.storage.storage_value import StorageByteGroup
+from traces_parser.datatypes.storage_byte_group import StorageByteGroup
 from traces_parser.parser.storage.storage_writes import StorageAccesses, StorageWrites
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 from traces_parser.utils.mnemonics import opcode_to_name
 
 

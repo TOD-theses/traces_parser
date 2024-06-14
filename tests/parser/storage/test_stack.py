@@ -1,7 +1,7 @@
 import pytest
 from tests.test_utils.test_utils import _test_group, _test_group32, _test_stack
 from traces_parser.parser.storage.stack import Stack
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 
 def test_stack_empty():

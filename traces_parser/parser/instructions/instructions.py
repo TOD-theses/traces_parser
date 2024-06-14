@@ -41,13 +41,13 @@ from traces_parser.parser.information_flow.information_flow_dsl import (
 )
 from traces_parser.parser.information_flow.information_flow_spec import FlowSpec
 from traces_parser.parser.instructions.instruction import Instruction
-from traces_parser.parser.storage.storage_value import StorageByteGroup
+from traces_parser.datatypes.storage_byte_group import StorageByteGroup
 from traces_parser.parser.storage.storage_writes import (
     MemoryWrite,
     StackPush,
     StorageWrites,
 )
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 CallDataNew = TypedDict(
     "CallDataNew",

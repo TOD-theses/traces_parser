@@ -4,9 +4,7 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 from traces_parser.parser.events_parser import parse_events
-from traces_parser.parser.instructions_parser import (
-    parse_transaction,
-)
+from traces_parser.parser.instructions_parser import parse_transaction
 from traces_parser.utils.metadata_file_loader import load_metadata_file
 
 

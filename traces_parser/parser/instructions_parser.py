@@ -1,12 +1,8 @@
 from collections.abc import Iterable
-from dataclasses import dataclass
 from typing import Sequence
 
 from traces_parser.parser.environment.call_context import CallContext
-from traces_parser.parser.environment.call_context_manager import (
-    CallTree,
-    build_call_tree,
-)
+from traces_parser.parser.environment.call_context_manager import build_call_tree
 from traces_parser.parser.environment.parsing_environment import (
     InstructionOutputOracle,
     ParsingEnvironment,
@@ -16,24 +12,13 @@ from traces_parser.parser.information_flow.constant_step_indexes import (
     SPECIAL_STEP_INDEXES,
 )
 from traces_parser.parser.instructions.instruction import Instruction
-from traces_parser.parser.storage.storage_value import StorageByteGroup
+from traces_parser.datatypes.storage_byte_group import StorageByteGroup
 from traces_parser.parser.trace_evm.trace_evm import InstructionMetadata, TraceEVM
-from traces_parser.utils.hexstring import HexString
-
-
-@dataclass
-class TransactionParsingInfo:
-    sender: HexString
-    to: HexString
-    calldata: HexString
-    value: HexString
-    verify_storages: bool = True
-
-
-@dataclass
-class ParsedTransaction:
-    instructions: Sequence[Instruction]
-    call_tree: CallTree
+from traces_parser.parser.transaction_parsing_info import (
+    ParsedTransaction,
+    TransactionParsingInfo,
+)
+from traces_parser.datatypes.hexstring import HexString
 
 
 def parse_transaction(

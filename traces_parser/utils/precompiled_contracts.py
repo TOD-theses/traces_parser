@@ -1,4 +1,4 @@
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 _ADDR_TO_NAME = {
     1: "ecRecover",

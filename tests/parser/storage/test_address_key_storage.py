@@ -4,7 +4,7 @@ from tests.test_utils.test_utils import (
     _test_group32,
     _test_address_key_storage,
 )
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 
 def test_address_key_storage_get():

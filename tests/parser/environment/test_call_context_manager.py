@@ -38,7 +38,7 @@ from traces_parser.parser.storage.storage_writes import (
     StorageAccesses,
     StorageWrites,
 )
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 
 def get_add(call_context: CallContext) -> Instruction:

@@ -13,7 +13,7 @@ from traces_parser.parser.storage.storage import (
     RevertableStorage,
     Storage,
 )
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 
 class ParsingEnvironment:

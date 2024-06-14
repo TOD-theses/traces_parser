@@ -1,4 +1,4 @@
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 
 def test_hexstring_equals_str():

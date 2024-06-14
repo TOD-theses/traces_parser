@@ -15,7 +15,7 @@ from traces_parser.parser.instructions_parser import (
     parse_transaction,
 )
 from traces_parser.parser.trace_evm.trace_evm import parse_instruction
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 
 def get_parsing_info(verify_storages=True) -> TransactionParsingInfo:

@@ -2,7 +2,7 @@
 
 import requests
 
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 from traces_parser.utils.signatures.signature_lookup import SignatureLookup
 
 

@@ -25,7 +25,7 @@ from traces_parser.parser.storage.address_key_storage import AddressKeyStorage
 from traces_parser.parser.storage.balances import Balances
 from traces_parser.parser.storage.memory import Memory
 from traces_parser.parser.storage.stack import Stack
-from traces_parser.parser.storage.storage_value import StorageByteGroup
+from traces_parser.datatypes.storage_byte_group import StorageByteGroup
 from traces_parser.parser.storage.storage_writes import (
     MemoryAccess,
     PersistentStorageAccess,
@@ -36,7 +36,7 @@ from traces_parser.parser.storage.storage_writes import (
     StorageWrites,
 )
 from traces_parser.parser.trace_evm.trace_evm import InstructionMetadata
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 from traces_parser.utils.mnemonics import opcode_to_name
 
 TestVal = str | HexString | StorageByteGroup

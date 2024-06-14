@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from traces_parser.parser.instructions_parser import TransactionParsingInfo
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 
 def load_metadata_file(path: Path) -> TransactionParsingInfo:

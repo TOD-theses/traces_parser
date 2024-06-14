@@ -2,7 +2,7 @@ import json
 from collections.abc import Iterable
 from dataclasses import dataclass
 
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 
 
 @dataclass(frozen=True)

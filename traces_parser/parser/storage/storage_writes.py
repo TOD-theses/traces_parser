@@ -2,8 +2,8 @@ from abc import ABC
 from dataclasses import dataclass
 from typing import Iterable, Sequence
 
-from traces_parser.parser.storage.storage_value import StorageByteGroup
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.storage_byte_group import StorageByteGroup
+from traces_parser.datatypes.hexstring import HexString
 
 
 @dataclass

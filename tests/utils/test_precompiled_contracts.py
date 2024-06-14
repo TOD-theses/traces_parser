@@ -1,4 +1,4 @@
-from traces_parser.utils.hexstring import HexString
+from traces_parser.datatypes.hexstring import HexString
 from traces_parser.utils.precompiled_contracts import (
     addr_to_precompiled_contract_name,
     is_precompiled_contract,
