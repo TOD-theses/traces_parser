@@ -141,8 +141,10 @@ class CALL(CallInstruction):
         # if the call_context did not execute/got reverted (double check specification)
         balance_transfer(current_storage_address(), stack_arg(1), stack_arg(2)),
         calldata_write(mem_range(stack_arg(3), stack_arg(4))),
-        stack_arg(5),
-        stack_arg(6),
+        # we access the memory for the memory expansion
+        # note that the memory expansion always happens
+        # even if the actual return data is not that large
+        mem_range(stack_arg(5), stack_arg(6)),
     )
 
     @property
@@ -186,6 +188,7 @@ class CALL(CallInstruction):
         else:
             return_data = child_context.return_data
             return_data_slice = return_data[:size]
+            # TODO: if actual size is lower than the allowed return size, we still do memory expansion (without overwriting any values inbetween)
             mem_writes = [MemoryWrite(offset, return_data_slice)]
         success = "0x0" if child_context.reverted else "0x1"
         stack_push = StackPush(
@@ -223,8 +226,8 @@ class STATICCALL(CallInstruction):
         stack_arg(0),
         stack_arg(1),
         calldata_write(mem_range(stack_arg(2), stack_arg(3))),
-        stack_arg(4),
-        stack_arg(5),
+        # memory expansion on return (see CALL)
+        mem_range(stack_arg(4), stack_arg(5)),
     )
 
     @property
@@ -304,8 +307,8 @@ class DELEGATECALL(CallInstruction):
         stack_arg(0),
         stack_arg(1),
         calldata_write(mem_range(stack_arg(2), stack_arg(3))),
-        stack_arg(4),
-        stack_arg(5),
+        # memory expansion on return (see CALL)
+        mem_range(stack_arg(4), stack_arg(5)),
         callvalue(),
     )
 
@@ -388,8 +391,8 @@ class CALLCODE(CallInstruction):
         stack_arg(0),
         balance_transfer(current_storage_address(), stack_arg(1), stack_arg(2)),
         calldata_write(mem_range(stack_arg(3), stack_arg(4))),
-        stack_arg(5),
-        stack_arg(6),
+        # memory expansion on return (see CALL)
+        mem_range(stack_arg(5), stack_arg(6)),
     )
 
     @property

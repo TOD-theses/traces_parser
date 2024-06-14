@@ -68,6 +68,24 @@ def test_storage_byte_group_split_by_dependencies():
     assert groups[2].depends_on_instruction_indexes() == {1}
 
 
+def test_storage_byte_group_to_size():
+    group = StorageByteGroup.from_hexstring(HexString("abcd"), 1)
+
+    group.to_size(8, 2, padding="right")
+
+    assert group.get_hexstring() == "abcd000000000000"
+    assert group.depends_on_instruction_indexes() == {1, 2}
+
+
+def test_storage_byte_group_to_size_decrease():
+    group = StorageByteGroup.from_hexstring(HexString("abcd"), 1)
+
+    group.to_size(1, 2, padding="right")
+
+    assert group.get_hexstring() == "ab"
+    assert group.depends_on_instruction_indexes() == {1}
+
+
 def test_storage_byte_group_clone():
     group = StorageByteGroup.from_hexstring(HexString("abcd"), 1)
 

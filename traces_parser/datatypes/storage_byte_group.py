@@ -1,3 +1,4 @@
+from typing import Literal
 from traces_parser.datatypes.hexstring import HexString
 
 
@@ -28,6 +29,19 @@ class StorageByteGroup:
 
     def get_hexstring(self) -> HexString:
         return self._hexstring
+
+    def to_size(self, size: int, step_index: int, padding: Literal["right"]) -> None:
+        own_len = len(self)
+        if own_len == size:
+            return
+        if padding == "right":
+            if own_len > size:
+                self._hexstring = self._hexstring[: size * 2]
+                self._step_indexes = self._step_indexes[:size]
+            else:
+                self._hexstring = self._hexstring + HexString.zeros(size - own_len)
+                self._step_indexes.extend([step_index for _ in range(size - own_len)])
+                print(self)
 
     def depends_on_instruction_indexes(self) -> set[int]:
         return set(self._step_indexes)

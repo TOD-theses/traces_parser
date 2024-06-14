@@ -9,15 +9,29 @@
             "type": "debugpy",
             "request": "launch",
             "module": "traces_parser",
-            "args": ["--bundles", "traces/benchmark_traces/${input:pickAttack}"],
+            "args": ["--trace", "traces/${input:pickDir}/${input:pickOrder}/${input:pickTransaction}.jsonl", "--metadata", "traces/${input:pickDir}/metadata.json"],
         }
     ],
     "inputs": [
         {
-            "id": "pickAttack",
+            "id": "pickDir",
             "type": "promptString",
-            "description": "Benchmark Attack ID",
-            "default": "62a8b9ece30161692b68cbb5",
+            "description": "Directory in traces/",
+            "default": "debug",
+        }, {
+            "id": "pickType",
+            "type": "promptString",
+            "description": "In the actual or reverse dir?",
+            "default": "actual",
+        }, {
+            "id": "pickOrder",
+            "type": "promptString",
+            "description": "The actual or reverse order?",
+            "default": "actual",
+        }, {
+            "id": "pickTransaction",
+            "type": "promptString",
+            "description": "The tx hash",
         }
     ]
 }

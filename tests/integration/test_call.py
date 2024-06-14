@@ -151,6 +151,53 @@ def test_call_data_and_return_data_flow() -> None:
     )
 
 
+def test_call_expands_memory_even_with_small_return_data() -> None:
+    # CALL instructions expand the memory on return
+    # even if the returned data is not large enough
+    # refer to M(M(μi, μs[3], μs[4]), μs[5], μs[6]) in the yellow paper
+    root = _test_root()
+    env = ParsingEnvironment(root)
+    evm = TraceEVM(env, verify_storages=True)
+    step_index = _TestCounter(0)
+
+    steps: list[tuple[InstructionMetadata, InstructionOutputOracle]] = [
+        # call with abcdef as calldata and value 0x1234
+        # writes 16 bytes from the call return data to 0x0
+        *_test_push_steps(
+            reversed(
+                [
+                    "0x0",
+                    _test_hash_addr("target address"),
+                    "0x1234",
+                    "0x0",
+                    "0x0",
+                    "0x0",
+                    "0x100",
+                ]
+            ),
+            step_index,
+            "push_call",
+        ),
+        (
+            InstructionMetadata(CALL.opcode, step_index.next("call")),
+            _test_oracle(depth=2),
+        ),
+        # return a few 0s
+        *_test_push_steps(
+            reversed(["0x0", "0x6"]),
+            step_index,
+            "push_return",
+            base_oracle=_test_oracle(depth=2),
+        ),
+        (
+            InstructionMetadata(RETURN.opcode, step_index.next("return")),
+            _test_oracle(depth=1, stack=["0x1"], memory="00" * 0x100),
+        ),
+    ]
+
+    _instructions = [evm.step(instr, oracle) for instr, oracle in steps]
+
+
 def test_call_to_eoa() -> None:
     root = _test_root()
     env = ParsingEnvironment(root)

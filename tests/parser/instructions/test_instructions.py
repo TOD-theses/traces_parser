@@ -1141,7 +1141,7 @@ def test_call_enter() -> None:
 
     accesses = call.get_accesses()
     assert len(accesses.stack) == 7
-    assert len(accesses.memory) == 1
+    assert len(accesses.memory) == 2
     assert accesses.memory[0].offset == 0x2
     assert accesses.memory[0].value.get_hexstring() == "33445566"
     assert accesses.memory[0].value.depends_on_instruction_indexes() == {1}
@@ -1192,7 +1192,7 @@ def test_staticcall_enter() -> None:
 
     accesses = staticcall.get_accesses()
     assert len(accesses.stack) == 6
-    assert len(accesses.memory) == 1
+    assert len(accesses.memory) == 2
     assert accesses.memory[0].offset == 0x2
     assert accesses.memory[0].value.get_hexstring() == "33445566"
     assert accesses.memory[0].value.depends_on_instruction_indexes() == {1}
@@ -1229,7 +1229,7 @@ def test_callcode_enter() -> None:
 
     accesses = callcode.get_accesses()
     assert len(accesses.stack) == 7
-    assert len(accesses.memory) == 1
+    assert len(accesses.memory) == 2
     assert accesses.memory[0].offset == 0x2
     assert accesses.memory[0].value.get_hexstring() == "33445566"
     assert accesses.memory[0].value.depends_on_instruction_indexes() == {1}
@@ -1281,7 +1281,7 @@ def test_delegatecall_enter() -> None:
 
     accesses = delegatecall.get_accesses()
     assert len(accesses.stack) == 6
-    assert len(accesses.memory) == 1
+    assert len(accesses.memory) == 2
     assert accesses.memory[0].offset == 0x2
     assert accesses.memory[0].value.get_hexstring() == "33445566"
     assert accesses.memory[0].value.depends_on_instruction_indexes() == {1}
