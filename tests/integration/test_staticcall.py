@@ -16,6 +16,7 @@ from traces_parser.parser.information_flow.information_flow_graph import (
     build_information_flow_graph,
 )
 from traces_parser.parser.instructions.instructions import (
+    RETURNDATASIZE,
     STATICCALL,
     CALLDATACOPY,
     CALLVALUE,
@@ -217,7 +218,7 @@ def test_staticcall_to_eoa() -> None:
     )
 
 
-def test_delegate_to_precompiled_contract() -> None:
+def test_staticcall_to_precompiled_contract() -> None:
     root = _test_root()
     env = ParsingEnvironment(root)
     evm = TraceEVM(env, verify_storages=True)
@@ -261,6 +262,12 @@ def test_delegate_to_precompiled_contract() -> None:
             InstructionMetadata(MSIZE.opcode, step_index.next("msize")),
             _test_oracle(stack=["0x20"], memory=post_memory),
         ),
+        (
+            InstructionMetadata(
+                RETURNDATASIZE.opcode, step_index.next("returndatasize")
+            ),
+            _test_oracle(stack=["0x3", "0x20"], memory=post_memory),
+        ),
     ]
 
     instructions = [evm.step(instr, oracle) for instr, oracle in steps]
@@ -274,5 +281,6 @@ def test_delegate_to_precompiled_contract() -> None:
             # the push, as the value from mstore is still in memory.
             # the call, as it returned new data (not 100% accurate if we would model it as a real identity)
             ("msize", {"push_mstore_0", "call"}),
+            ("returndatasize", {"call"}),
         ],
     )

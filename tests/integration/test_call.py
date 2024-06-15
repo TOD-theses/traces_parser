@@ -288,6 +288,12 @@ def test_call_to_precompiled_contract() -> None:
             InstructionMetadata(MSIZE.opcode, step_index.next("msize")),
             _test_oracle(stack=["0x20"], memory=post_memory),
         ),
+        (
+            InstructionMetadata(
+                RETURNDATASIZE.opcode, step_index.next("returndatasize")
+            ),
+            _test_oracle(stack=["0x3", "0x20"], memory=post_memory),
+        ),
     ]
 
     instructions = [evm.step(instr, oracle) for instr, oracle in steps]

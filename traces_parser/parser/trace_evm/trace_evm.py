@@ -16,7 +16,11 @@ from traces_parser.parser.instructions.instructions import (
     get_instruction_class,
 )
 from traces_parser.datatypes.storage_byte_group import StorageByteGroup
-from traces_parser.parser.storage.storage_writes import StorageAccesses, StorageWrites
+from traces_parser.parser.storage.storage_writes import (
+    ReturnWrite,
+    StorageAccesses,
+    StorageWrites,
+)
 from traces_parser.datatypes.hexstring import HexString
 from traces_parser.utils.mnemonics import opcode_to_name
 
@@ -122,19 +126,23 @@ class TraceEVM:
                 self._apply_stack_oracle(instruction, output_oracle)
         else:
             # immediate call exit (call to EOA or precompiled contract)
+            if not isinstance(instruction, CallInstruction):
+                raise Exception(
+                    f"Unexpected immediate call return for {instruction}. Only implemented for calls (not creates)"
+                )
             # we create new call frames so that returndata will point to this call
             # and it shows up in the call tree
+            return_writes = instruction.get_immediate_return_writes(
+                self.env, output_oracle
+            )
+            return_data = return_writes.memory[0].value
+            return_write = StorageWrites(return_data=ReturnWrite(return_data))
             self.env.on_call_enter(next_call_context)
+            # update return data
+            self._apply_storage_writes(return_write, instruction)
             self._update_call_context_on_exit(current_call_context)
             # update stack and memory
-            if isinstance(instruction, CallInstruction):
-                return_writes = instruction.get_immediate_return_writes(
-                    self.env, output_oracle
-                )
-                self._apply_storage_writes(return_writes, instruction)
-            else:
-                # for CREATE and CREATE2
-                self._apply_stack_oracle(instruction, output_oracle)
+            self._apply_storage_writes(return_writes, instruction)
 
     def _update_call_context_on_exit(self, next_call_context: CallContext):
         if self.env.current_call_context.reverted:
