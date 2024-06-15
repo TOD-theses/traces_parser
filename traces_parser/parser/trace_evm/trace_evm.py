@@ -11,6 +11,7 @@ from traces_parser.parser.environment.parsing_environment import (
     InstructionOutputOracle,
     ParsingEnvironment,
 )
+from traces_parser.parser.information_flow.information_flow_spec import Flow
 from traces_parser.parser.instructions.instruction import Instruction
 from traces_parser.parser.instructions.instructions import (
     CallInstruction,
@@ -42,7 +43,24 @@ class TraceEVM:
         instruction_metadata: InstructionMetadata,
         output_oracle: InstructionOutputOracle,
     ) -> Instruction:
-        instruction = parse_instruction(self.env, instruction_metadata, output_oracle)
+        try:
+            instruction = parse_instruction(
+                self.env, instruction_metadata, output_oracle
+            )
+        except Exception as e:
+            # it's okay if fail to parse the last instruction
+            # eg because it is an out-of-gas condition
+            if output_oracle.depth is None:
+                instruction = Instruction(
+                    instruction_metadata.opcode,
+                    opcode_to_name(instruction_metadata.opcode, "UNKNOWN"),
+                    instruction_metadata.pc,
+                    self.env.current_step_index,
+                    self.env.current_call_context,
+                    Flow(StorageAccesses(), StorageWrites()),
+                )
+            else:
+                raise e
 
         if self._check_exceptional_halt(instruction_metadata, output_oracle):
             self._handle_exceptional_halt(instruction_metadata, output_oracle.depth)
