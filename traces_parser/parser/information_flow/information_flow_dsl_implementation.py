@@ -471,7 +471,12 @@ def _transient_storage_get_node(
 ):
     key = args[0].result
     address = env.current_call_context.storage_address
-    result = env.transient_storage.get(address, key.get_hexstring())
+    if env.transient_storage.knows_key(address, key.get_hexstring()):
+        result = env.transient_storage.get(address, key.get_hexstring())
+    else:
+        result = StorageByteGroup.from_hexstring(
+            HexString.zeros(32), env.current_step_index
+        )
 
     return FlowWithResult(
         accesses=StorageAccesses(

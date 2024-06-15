@@ -277,6 +277,35 @@ def test_transient_storage_get():
     assert flow.result.depends_on_instruction_indexes() == {1}
 
 
+def test_transient_storage_get_unknown():
+    call_context = _test_child()
+    address = call_context.storage_address
+    key = HexString("1234").as_size(32)
+    env = mock_env(
+        step_index=3,
+        current_call_context=call_context,
+        transient_storage={},
+    )
+
+    flow = transient_storage_get(_test_node(key, 2)).compute(env, _test_oracle())
+
+    assert len(flow.accesses.transient_storage) == 1
+    assert flow.accesses.transient_storage[0].address == address
+    assert flow.accesses.transient_storage[0].key.get_hexstring() == key
+    assert flow.accesses.transient_storage[0].key.depends_on_instruction_indexes() == {
+        2
+    }
+    assert flow.accesses.transient_storage[0].value.get_hexstring() == HexString.zeros(
+        32
+    )
+    assert flow.accesses.transient_storage[
+        0
+    ].value.depends_on_instruction_indexes() == {3}
+
+    assert flow.result.get_hexstring() == HexString.zeros(32)
+    assert flow.result.depends_on_instruction_indexes() == {3}
+
+
 def test_transient_storage_set():
     call_context = _test_child()
     address = call_context.storage_address
