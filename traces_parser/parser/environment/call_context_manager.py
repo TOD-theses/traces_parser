@@ -164,9 +164,7 @@ def makes_normal_halt(opcode: int, current_depth: int, next_depth: int):
 
 
 def makes_exceptional_halt(opcode: int, current_depth: int, next_depth: int):
-    return makes_halt(
-        current_depth, next_depth
-    ) == next_depth and not is_normal_halt_opcode(opcode)
+    return makes_halt(current_depth, next_depth) and not is_normal_halt_opcode(opcode)
 
 
 def is_normal_halt_opcode(opcode: int) -> bool:

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import cast
 
 from traces_parser.parser.environment.call_context import CallContext
 from traces_parser.parser.environment.call_context_manager import (
@@ -43,10 +44,9 @@ class TraceEVM:
     ) -> Instruction:
         instruction = parse_instruction(self.env, instruction_metadata, output_oracle)
 
-        made_exceptional_halt = self._check_exceptional_halt(
-            instruction_metadata, output_oracle
-        )
-        if not made_exceptional_halt:
+        if self._check_exceptional_halt(instruction_metadata, output_oracle):
+            self._handle_exceptional_halt(instruction_metadata, output_oracle.depth)
+        else:
             self._update_storages(instruction)
             self._check_call_context_changes(instruction, output_oracle)
             # we apply balance transfers after potential call context changes
@@ -72,29 +72,29 @@ class TraceEVM:
         instruction_metadata: InstructionMetadata,
         output_oracle: InstructionOutputOracle,
     ) -> bool:
-        """Return True if it is an exceptional halt"""
+        """Return True if this makes an exceptional halt"""
         if not output_oracle.depth:
             return False
-        if makes_exceptional_halt(
+        return makes_exceptional_halt(
             instruction_metadata.opcode,
             self.env.current_call_context.depth,
             output_oracle.depth,
-        ):
-            next_call_context = exit_call_context(
-                self.env.current_call_context,
-                instruction_metadata.opcode,
-                output_oracle.depth,
-            )
-            call = self.env.current_call_context.initiating_instruction
-            assert call is not None
-            self._update_call_context_on_exit(next_call_context)
-            self.env.stack.push(
-                StorageByteGroup.from_hexstring(
-                    HexString("0").as_size(32), call.step_index
-                )
-            )
-            return True
-        return False
+        )
+
+    def _handle_exceptional_halt(
+        self, instruction_metadata: InstructionMetadata, next_depth: int | None
+    ):
+        next_call_context = exit_call_context(
+            self.env.current_call_context,
+            instruction_metadata.opcode,
+            cast(int, next_depth),
+        )
+        call = self.env.current_call_context.initiating_instruction
+        assert call is not None
+        self._update_call_context_on_exit(next_call_context)
+        self.env.stack.push(
+            StorageByteGroup.from_hexstring(HexString("0").as_size(32), call.step_index)
+        )
 
     def _check_call_context_changes(
         self, instruction: Instruction, output_oracle: InstructionOutputOracle

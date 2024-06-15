@@ -17,6 +17,7 @@ from traces_parser.parser.environment.call_context_manager import (
     ExpectedDepthChange,
     UnexpectedDepthChange,
     build_call_tree,
+    makes_exceptional_halt,
     update_call_context,
 )
 from traces_parser.parser.instructions.instruction import Instruction
@@ -26,6 +27,7 @@ from traces_parser.parser.instructions.instructions import (
     CALLCODE,
     CREATE,
     DELEGATECALL,
+    PUSH2,
     RETURN,
     REVERT,
     SELFDESTRUCT,
@@ -356,3 +358,15 @@ def test_build_call_tree():
     assert first_nested.call_context.code_address == _test_hash_addr("0xfirst_nested")
     assert second.call_context.code_address == _test_hash_addr("0xsecond")
     assert third.call_context.code_address == _test_hash_addr("0xthird")
+
+
+def test_makes_exceptional_halt():
+    assert makes_exceptional_halt(PUSH2.opcode, current_depth=3, next_depth=2)
+
+
+def test_makes_exceptional_halt_return():
+    assert not makes_exceptional_halt(RETURN.opcode, current_depth=3, next_depth=2)
+
+
+def test_makes_exceptional_halt_return_same_depth():
+    assert not makes_exceptional_halt(PUSH2.opcode, current_depth=3, next_depth=3)
