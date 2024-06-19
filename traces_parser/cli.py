@@ -1,6 +1,7 @@
 """CLI interface for traces_parser project."""
 
 from argparse import ArgumentParser
+from importlib.metadata import version
 from pathlib import Path
 
 from traces_parser.parser.events_parser import parse_events
@@ -10,6 +11,9 @@ from traces_parser.utils.metadata_file_loader import load_metadata_file
 
 def main():
     parser = ArgumentParser(description="Parse EVM traces")
+    parser.add_argument(
+        "--version", action="version", version="%(prog)s " + version("traces_parser")
+    )
     parser.add_argument(
         "--trace", type=Path, required=True, help="Path to the EIP-3155 trace"
     )
